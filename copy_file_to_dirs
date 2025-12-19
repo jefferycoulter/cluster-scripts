@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -ne 2 ]]; then
+	echo "Usage:"
+	echo -e "\t$0 <file_to_copy> <simulation_dir>"
+	exit 1
+fi
+
+WD=$(pwd)
+echo $WD
+
+SIM_DIR="$WD/$2"
+echo $SIM_DIR
+
+for subdir in "$SIM_DIR"/*; do
+    if [ -d "$subdir" ]; then
+        echo "Copying $1 to $subdir"
+        cp $1 $subdir
+    fi
+done

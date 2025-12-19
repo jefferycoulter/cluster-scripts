@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -ne 2 ]]; then
+	echo "Usage:"
+	echo -e "\t$0 <simulation_dir> <file_to_launch>"
+	exit 1
+fi
+
+WD=$(pwd)
+echo $WD
+
+SIM_DIR="$WD/$1"
+echo $SIM_DIR
+
+for subdir in "$SIM_DIR"/*; do
+    if [ -d "$subdir" ]; then
+        echo "Launching job in $subdir"
+        cd $subdir
+	sbatch "$2"
+	cd -
+    fi
+done

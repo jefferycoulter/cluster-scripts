@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -ne 4 ]]; then
+	echo "Usage:"
+	echo -e "\t$0 <simulation_dir> <line_number> <old_value> <new_value>"
+	exit 1
+fi
+
+WD=$(pwd)
+echo $WD
+
+SIM_DIR="$WD/$1"
+echo $SIM_DIR
+
+for subdir in "$SIM_DIR"/*; do
+    if [ -d "$subdir" ]; then
+        if [ -f "$subdir/condition" ]; then
+            echo "Changing value in line $2 of condition from $3 to $4 in $subdir"
+            sed -i "${2}s/${3}/${4}/" "$subdir/condition" 
+        else
+            echo "No condition file found in $subdir, skipping..."
+        fi 
+    fi
+done

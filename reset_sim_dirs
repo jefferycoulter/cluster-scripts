@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+if [[ "$#" -ne 1 ]]; then
+	echo "Usage:"
+	echo -e "\t$0 <simulation_dir>"
+	exit 1
+fi
+
+WD=$(pwd)
+echo $WD
+
+SIM_DIR="$WD/$1"
+echo $SIM_DIR
+
+for subdir in "$SIM_DIR"/*; do
+    if [ -d "$subdir" ]; then
+        DD="$subdir/data"
+        if [ -d "$DD" ]; then
+            echo "Deleting 'data' directory from $subdir"
+            rm -r "$DD"
+        fi
+
+	echo "Deleting slurm output file from $subdir"
+	rm "$subdir/slurm-"*
+    fi
+done
